@@ -79,7 +79,7 @@ def main():
         st.warning("Nav datu pēc izvēlētajiem filtriem.")
         return
 
-    total_sales = filtered_df['Sales'].sum()
+    total_sales = filtered_df['Sales_Amount'].sum()
     total_profit = filtered_df['Profit'].sum()
     average_discount = filtered_df['Discount'].mean() * 100
     
@@ -100,19 +100,19 @@ def main():
         # 1. Line chart: Sales over time (Date vs Sales)
         st.subheader("Pārdošana Laika Gaitā")
         sales_over_time = filtered_df.groupby('Date')['Sales'].sum().reset_index()
-        fig_line = px.line(sales_over_time, x='Date', y='Sales', title='Pārdošana laika gaitā')
+        fig_line = px.line(sales_over_time, x='Date', y='Sales_Amount', title='Pārdošana laika gaitā')
         st.plotly_chart(fig_line, use_container_width=True)
 
         # 2. Scatter plot: Sales vs Profit
         st.subheader("Pārdošana pret Peļņu")
-        fig_scatter = px.scatter(filtered_df, x='Sales', y='Profit', color='Product_Category',
+        fig_scatter = px.scatter(filtered_df, x='Sales_Amount', y='Profit', color='Product_Category',
                                  title='Pārdošana pret peļņu', hover_data=['Product', 'Region'])
         st.plotly_chart(fig_scatter, use_container_width=True)
 
         # 3. Bar chart: Sales by Product_Category
         st.subheader("Pārdošana pa Produktu Kategorijām")
-        sales_by_category = filtered_df.groupby('Product_Category')['Sales'].sum().reset_index()
-        fig_bar = px.bar(sales_by_category, x='Product_Category', y='Sales', title='Pārdošana pa produktu kategorijām')
+        sales_by_category = filtered_df.groupby('Product_Category')['Sales_Amount'].sum().reset_index()
+        fig_bar = px.bar(sales_by_category, x='Product_Category', y='Sales_Amount', title='Pārdošana pa produktu kategorijām')
         st.plotly_chart(fig_bar, use_container_width=True)
     else:
         st.write("Nav datu, kas atbilst filtriem.")

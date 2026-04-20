@@ -97,7 +97,7 @@ def main():
     # --- Diagrammas ar Plotly ---
 
     if not filtered_df.empty:
-        st.write(filtered_df.dtypes)
+    
         # 1. Line chart: Sales over time (Date vs Sales)
         st.subheader("Pārdošana Laika Gaitā")
         sales_over_time = filtered_df.groupby('Date')['Sales_Amount'].sum().reset_index()

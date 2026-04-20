@@ -99,7 +99,7 @@ def main():
     if not filtered_df.empty:
         # 1. Line chart: Sales over time (Date vs Sales)
         st.subheader("Pārdošana Laika Gaitā")
-        sales_over_time = filtered_df.groupby('Date')['Sales'].sum().reset_index()
+        sales_over_time = filtered_df.groupby('Date')['Sales_Amount'].sum().reset_index()
         fig_line = px.line(sales_over_time, x='Date', y='Sales_Amount', title='Pārdošana laika gaitā')
         st.plotly_chart(fig_line, use_container_width=True)
 

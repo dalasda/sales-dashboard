@@ -74,10 +74,15 @@ def main():
     # --- KPI Rādītāji ---
     st.markdown("## Galvenie Veiktspējas Rādītāji")
     col1, col2, col3 = st.columns(3)
+    # Pārbaude vai ir dati
+    if filtered_df.empty:
+        st.warning("Nav datu pēc izvēlētajiem filtriem.")
+        return
 
     total_sales = filtered_df['Sales'].sum()
     total_profit = filtered_df['Profit'].sum()
-    average_discount = filtered_df['Discount'].mean() * 100 if not filtered_df.empty else 0
+    average_discount = filtered_df['Discount'].mean() * 100
+    
 
     with col1:
         st.metric(label="Kopējais Apgrozījums", value=f"{total_sales:.2f} €")

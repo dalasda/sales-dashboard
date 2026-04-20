@@ -17,7 +17,9 @@ def load_data():
 
 def main():
     st.set_page_config(page_title="Pārdošanas Panelis", layout="centered")
- st.title("Pārdošanas Panelis")
+    st.title("Pārdošanas Panelis")
+    if __name__ == "__main__":
+    main()
 
 if st.button("🔄 Pārlādēt datus"):
     st.cache_data.clear()

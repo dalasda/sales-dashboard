@@ -107,7 +107,7 @@ def main():
         # 2. Scatter plot: Sales vs Profit
         st.subheader("Pārdošana pret Peļņu")
         fig_scatter = px.scatter(filtered_df, x='Sales_Amount', y='Profit', color='Product_Category',
-                                 title='Pārdošana pret peļņu', hover_data=['Product', 'Region'])
+                                 title='Pārdošana pret peļņu', hover_data=['Product_Category', 'Region'])
         st.plotly_chart(fig_scatter, use_container_width=True)
 
         # 3. Bar chart: Sales by Product_Category

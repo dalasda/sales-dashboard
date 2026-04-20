@@ -109,7 +109,7 @@ def main():
         sales_by_category = filtered_df.groupby('Product_Category')['Sales'].sum().reset_index()
         fig_bar = px.bar(sales_by_category, x='Product_Category', y='Sales', title='Pārdošana pa produktu kategorijām')
         st.plotly_chart(fig_bar, use_container_width=True)
-        else:
+    else:
         st.write("Nav datu, kas atbilst filtriem.")
 
 

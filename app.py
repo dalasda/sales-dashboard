@@ -1,49 +1,42 @@
-
 import streamlit as st
 import pandas as pd
-import plotly.express as px # Import plotly.express
+import plotly.express as px
 
-# Decorate data loading function with cache_data
+
 @st.cache_data
 def load_data():
     try:
         df = pd.read_csv("sales_data_capstone.csv")
-        # Pārveido 'Date' kolonu uz datetime tipu
         df['Date'] = pd.to_datetime(df['Date'])
         return df
     except FileNotFoundError:
-        st.error("Kļūda: 'sales_data_capstone.csv' fails nav atrasts. Lūdzu, pārliecinieties, ka fails atrodas tajā pašā direktorijā.")
-        return pd.DataFrame() # Return empty DataFrame on error
+        st.error("Fails nav atrasts")
+        return pd.DataFrame()
+
 
 def main():
     st.set_page_config(page_title="Pārdošanas Panelis", layout="centered")
     st.title("Pārdošanas Panelis")
-   
-if __name__ == "__main__":
-    main()
 
-if st.button("🔄 Pārlādēt datus"):
-    st.cache_data.clear()
-    st.rerun()
-
-df = load_data()
-
-    # --- Sānjoslas filtri un Datu Pielādēšana ---
-    st.sidebar.header("Filtri")
-
-    # Add a reload data button
-    if st.sidebar.button("Pārlādēt Datus"): # Moved to sidebar as per common practice for data controls
+    # Reload poga
+    if st.button("🔄 Pārlādēt datus"):
         st.cache_data.clear()
-        st.experimental_rerun()
+        st.rerun()
 
-    # Ielādē CSV failu
+    # Ielādē datus
     df = load_data()
 
     if df.empty:
-        return # Stop if data loading failed or returned empty
+        return
 
+    # Sidebar
+    st.sidebar.header("Filtri")
 
-    # Reģiona filtrs
+    if st.sidebar.button("Pārlādēt Datus"):
+        st.cache_data.clear()
+        st.rerun()
+
+    # --- FILTRI ---
     all_regions = df['Region'].unique()
     selected_regions = st.sidebar.multiselect(
         "Izvēlieties Reģionus",
@@ -116,8 +109,8 @@ df = load_data()
         sales_by_category = filtered_df.groupby('Product_Category')['Sales'].sum().reset_index()
         fig_bar = px.bar(sales_by_category, x='Product_Category', y='Sales', title='Pārdošana pa produktu kategorijām')
         st.plotly_chart(fig_bar, use_container_width=True)
-    else:
-        st.write("Nav datu, kas atbilstu izvēlētajiem filtriem.")
+        else:
+        st.write("Nav datu, kas atbilst filtriem.")
 
 
 if __name__ == "__main__":
